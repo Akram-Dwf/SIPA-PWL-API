@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from database import engine
 from models import sipa_models
-from routers import asisten_router
+from routers import asisten_router, pengajuan_router
 
 sipa_models.Base.metadata.create_all(bind=engine)
 
@@ -11,8 +11,8 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Mendaftarkan router asisten
 app.include_router(asisten_router.router)
+app.include_router(pengajuan_router.router)
 
 @app.get("/")
 def read_root():
