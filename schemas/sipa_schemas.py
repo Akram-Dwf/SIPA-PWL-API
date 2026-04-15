@@ -17,6 +17,10 @@ class PengajuanResponse(PengajuanBase):
 
     class Config:
         from_attributes = True
+        
+        
+class PengajuanUpdateStatus(BaseModel):
+    status: str
 
 class AsistenBase(BaseModel):
     nama: str
