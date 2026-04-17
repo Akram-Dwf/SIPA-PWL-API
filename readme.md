@@ -22,6 +22,7 @@ SIPA adalah RESTful API berbasis microservices yang dirancang untuk mendigitalis
    - Skema respons telah dioptimasi untuk menyembunyikan data sensitif pada endpoint publik.
 
 ## 📂 Struktur Proyek
+```text
 .
 ├── main.py              # Entry point aplikasi
 ├── database.py          # Konfigurasi koneksi MySQL
@@ -31,4 +32,5 @@ SIPA adalah RESTful API berbasis microservices yang dirancang untuk mendigitalis
 ├── auth/                # Keamanan & JWT Token
 ├── requirements.txt     # Daftar dependensi lengkap
 └── README.md            # Dokumentasi proyek
+```
 
