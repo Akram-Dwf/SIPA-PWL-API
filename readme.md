@@ -34,3 +34,24 @@ SIPA adalah RESTful API berbasis microservices yang dirancang untuk mendigitalis
 └── README.md            # Dokumentasi proyek
 ```
 
+## ⚙️ Cara Menjalankan
+1. **Persiapan Database**:
+    - Pastikan MySQL aktif (XAMPP/Laragon).
+    - Buat database baru bernama `sipa_db`.
+
+2. **Instalasi**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+3. **Jalankan Aplikasi**:
+    ```bash
+    uvicorn main:app --reload
+    ```
+4. **Dokumentasi API**:
+    Akses `http://127.0.0.1:8000/docs` untuk mencoba fitur via Swagger UI.
+
+**Disusun Oleh**:
+**Nama**        : Akram Alfadli Tamir
+**NIM**         : H071241076
+**Mata Kuliah** : Pemrograman Web Lanjutan (UTS)
+
