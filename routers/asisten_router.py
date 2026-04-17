@@ -7,7 +7,7 @@ from auth.security import get_password_hash
 
 router = APIRouter(
     prefix="/asisten",
-    tags=["Asisten"]
+    tags=["Manajemen Asisten"]
 )
 
 @router.post("/", response_model=sipa_schemas.AsistenResponse)

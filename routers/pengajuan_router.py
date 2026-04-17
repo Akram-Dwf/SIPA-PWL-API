@@ -7,7 +7,7 @@ from auth.security import get_current_user
 
 router = APIRouter(
     prefix="/pengajuan",
-    tags=["Pengajuan Jadwal"]
+    tags=["Manajemen Pengajuan"]
 )
 
 @router.post("/", response_model=sipa_schemas.PengajuanResponse)
