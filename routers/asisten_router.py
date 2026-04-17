@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import sipa_models
 from schemas import sipa_schemas
-from auth.security import get_password_hash
+from auth.security import get_password_hash, get_current_user
 
 router = APIRouter(
     prefix="/asisten",
@@ -42,7 +42,7 @@ def get_asisten(asisten_id: int, db: Session = Depends(get_db)):
     return db_asisten
 
 @router.put("/{asisten_id}", response_model=sipa_schemas.AsistenResponse)
-def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Session = Depends(get_db)):
+def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     db_asisten = db.query(sipa_models.Asisten).filter(sipa_models.Asisten.id == asisten_id).first()
     if not db_asisten:
         raise HTTPException(status_code=404, detail="Asisten tidak ditemukan")
@@ -57,7 +57,7 @@ def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Ses
     return db_asisten
 
 @router.delete("/{asisten_id}")
-def delete_asisten(asisten_id: int, db: Session = Depends(get_db)):
+def delete_asisten(asisten_id: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
     db_asisten = db.query(sipa_models.Asisten).filter(sipa_models.Asisten.id == asisten_id).first()
     if not db_asisten:
         raise HTTPException(status_code=404, detail="Asisten tidak ditemukan")
