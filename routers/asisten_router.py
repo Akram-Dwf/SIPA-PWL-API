@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from database import get_db
 from models import sipa_models
@@ -42,10 +42,21 @@ def get_asisten(asisten_id: int, db: Session = Depends(get_db)):
     return db_asisten
 
 @router.put("/{asisten_id}", response_model=sipa_schemas.AsistenResponse)
-def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+def update_asisten(
+    asisten_id: int, 
+    asisten: sipa_schemas.AsistenCreate, 
+    db: Session = Depends(get_db), 
+    current_user: str = Depends(get_current_user) 
+):
     db_asisten = db.query(sipa_models.Asisten).filter(sipa_models.Asisten.id == asisten_id).first()
     if not db_asisten:
-        raise HTTPException(status_code=404, detail="Asisten tidak ditemukan")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asisten tidak ditemukan")
+    
+    if db_asisten.username != current_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, 
+            detail="Akses ditolak! Anda hanya bisa mengubah akun Anda sendiri."
+        )
     
     db_asisten.nama = asisten.nama
     db_asisten.kelompok = asisten.kelompok
@@ -57,10 +68,20 @@ def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Ses
     return db_asisten
 
 @router.delete("/{asisten_id}")
-def delete_asisten(asisten_id: int, db: Session = Depends(get_db), current_user: str = Depends(get_current_user)):
+def delete_asisten(
+    asisten_id: int, 
+    db: Session = Depends(get_db), 
+    current_user: str = Depends(get_current_user)
+):
     db_asisten = db.query(sipa_models.Asisten).filter(sipa_models.Asisten.id == asisten_id).first()
     if not db_asisten:
-        raise HTTPException(status_code=404, detail="Asisten tidak ditemukan")
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asisten tidak ditemukan")
+    
+    if db_asisten.username != current_user:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, 
+            detail="Akses ditolak! Anda hanya bisa menghapus akun Anda sendiri."
+        )
     
     db.delete(db_asisten)
     db.commit()
