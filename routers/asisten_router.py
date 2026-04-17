@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import sipa_models
 from schemas import sipa_schemas
+from auth.security import get_password_hash
 
 router = APIRouter(
     prefix="/asisten",
@@ -15,11 +16,13 @@ def create_asisten(asisten: sipa_schemas.AsistenCreate, db: Session = Depends(ge
     if db_asisten:
         raise HTTPException(status_code=400, detail="Username sudah terdaftar")
     
+    hashed_pwd = get_password_hash(asisten.password)
+    
     new_asisten = sipa_models.Asisten(
         nama=asisten.nama,
         kelompok=asisten.kelompok,
         username=asisten.username,
-        password=asisten.password
+        password=hashed_pwd
     )
     
     db.add(new_asisten)
@@ -47,7 +50,7 @@ def update_asisten(asisten_id: int, asisten: sipa_schemas.AsistenCreate, db: Ses
     db_asisten.nama = asisten.nama
     db_asisten.kelompok = asisten.kelompok
     db_asisten.username = asisten.username
-    db_asisten.password = asisten.password
+    db_asisten.password = get_password_hash(asisten.password)
     
     db.commit()
     db.refresh(db_asisten)

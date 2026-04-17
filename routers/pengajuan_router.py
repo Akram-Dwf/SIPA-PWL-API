@@ -28,6 +28,10 @@ def create_pengajuan(pengajuan: sipa_schemas.PengajuanCreate, db: Session = Depe
     db.refresh(new_pengajuan)
     return new_pengajuan
 
+@router.get("/", response_model=list[sipa_schemas.PengajuanResponse])
+def get_all_pengajuan(db: Session = Depends(get_db)):
+    return db.query(sipa_models.PengajuanJadwal).all()
+
 @router.patch("/{pengajuan_id}/status", response_model=sipa_schemas.PengajuanResponse)
 def update_status_pengajuan(pengajuan_id: int, status_update: sipa_schemas.PengajuanUpdateStatus, db: Session = Depends(get_db)):
     db_pengajuan = db.query(sipa_models.PengajuanJadwal).filter(sipa_models.PengajuanJadwal.id == pengajuan_id).first()
