@@ -35,7 +35,6 @@ class AsistenCreate(AsistenBase):
 
 class AsistenResponse(AsistenBase):
     id: int
-    pengajuan: List[PengajuanResponse] = []
 
     class Config:
         from_attributes = True
