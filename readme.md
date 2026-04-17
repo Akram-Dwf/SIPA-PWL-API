@@ -50,8 +50,8 @@ SIPA adalah RESTful API berbasis microservices yang dirancang untuk mendigitalis
 4. **Dokumentasi API**:
     Akses `http://127.0.0.1:8000/docs` untuk mencoba fitur via Swagger UI.
 
-**Disusun Oleh**:
-**Nama**        : Akram Alfadli Tamir
-**NIM**         : H071241076
-**Mata Kuliah** : Pemrograman Web Lanjutan (UTS)
+# 📝Disusun Oleh:
+***Nama**        : Akram Alfadli Tamir
+***NIM**         : H071241076
+***Mata Kuliah** : Pemrograman Web Lanjutan (UTS)
 
