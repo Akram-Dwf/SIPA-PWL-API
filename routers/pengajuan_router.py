@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import sipa_models
 from schemas import sipa_schemas
+from auth.security import get_current_user  
 
 router = APIRouter(
     prefix="/pengajuan",
@@ -33,7 +34,12 @@ def get_all_pengajuan(db: Session = Depends(get_db)):
     return db.query(sipa_models.PengajuanJadwal).all()
 
 @router.patch("/{pengajuan_id}/status", response_model=sipa_schemas.PengajuanResponse)
-def update_status_pengajuan(pengajuan_id: int, status_update: sipa_schemas.PengajuanUpdateStatus, db: Session = Depends(get_db)):
+def update_status_pengajuan(
+    pengajuan_id: int, 
+    status_update: sipa_schemas.PengajuanUpdateStatus, 
+    db: Session = Depends(get_db),
+    current_user: str = Depends(get_current_user) 
+):
     db_pengajuan = db.query(sipa_models.PengajuanJadwal).filter(sipa_models.PengajuanJadwal.id == pengajuan_id).first()
     
     if not db_pengajuan:
